@@ -1,4 +1,4 @@
-package com.eleo95.reportapp;
+package com.eleo95.reportapp.activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.eleo95.reportapp.R;
+import com.eleo95.reportapp.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -122,9 +124,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private void simpleLogin(){
         String email = TextMail.getText().toString().trim();
         String password = TextPass.getText().toString().trim();
-        Toast.makeText(this,"Connecting...", Toast.LENGTH_SHORT).show();
+
 
         if(!isReallyEmpty(TextMail) && !isReallyEmpty(TextPass)){
+            Toast.makeText(this,"Connecting...", Toast.LENGTH_SHORT).show();
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -136,7 +139,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                                 // If sign in fails, display a message to the user.
                                 Toast.makeText(LogInActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                                //updateUI(null);
 
                             }
 
