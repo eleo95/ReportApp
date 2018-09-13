@@ -18,18 +18,14 @@
         android:background="@drawable/button_style"
         android:text="Login"
         android:textColor="#ffffff"
+        android:fontFamily="@font/productsansregular"
         app:layout_constraintBottom_toTopOf="@+id/signup_Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_password"
         app:layout_constraintVertical_bias="0.47" />
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/login_activity_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        app:title="Login Screen" />
+
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -40,6 +36,7 @@
 
 
     <EditText
+        android:fontFamily="@font/productsansregular"
         android:id="@+id/login_mail"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
@@ -55,6 +52,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
+        android:fontFamily="@font/productsansregular"
         android:id="@+id/login_password"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
@@ -79,6 +77,7 @@
         android:background="@drawable/button_style"
         android:text="Register"
         android:textColor="#ffffff"
+        android:fontFamily="@font/productsansregular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/googleButton"
         app:layout_constraintHorizontal_bias="0.473"
@@ -93,6 +92,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/button_style"
         android:text="Google"
+        android:fontFamily="@font/productsansregular"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,19 +101,19 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:padding="12dp"
         android:layout_width="110dp"
         android:layout_height="123dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:padding="12dp"
         app:layout_constraintBottom_toTopOf="@+id/login_mail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_activity_toolbar"
-        app:srcCompat="@drawable/reportapp"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.736"
+        app:srcCompat="@drawable/reportapp" />
 
 
 </android.support.constraint.ConstraintLayout>

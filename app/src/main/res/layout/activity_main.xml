@@ -14,29 +14,41 @@
         android:background="#ffffff"
         app:title="ReportApp"
         >
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <TextView
+                android:id="@+id/appbarrname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="14dp"
-                android:paddingBottom="14dp"
+
+
                 android:fontFamily="@font/productsansregular"
-                android:text="ReportApp"
-                android:textSize="20sp"/>
+
+                android:text="@string/app_name"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/photo"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:foregroundGravity="right"
-                android:tint="@color/colorAccent"
                 android:src="@drawable/ic_account_circle_24dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp"
-                />
-        </RelativeLayout>
+                android:tint="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.Toolbar>
     <RelativeLayout
         android:layout_width="match_parent"

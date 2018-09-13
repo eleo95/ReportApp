@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.eleo95.reportapp.R;
 import com.eleo95.reportapp.fragments.AccountFragment;
 import com.eleo95.reportapp.fragments.HomeFragment;
@@ -35,7 +36,13 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         userAvatar = findViewById(R.id.photo);
 
+
         if(currentUser != null){
+            if(currentUser.getPhotoUrl()!=null){
+                userAvatar.setImageTintList(null);
+                Glide.with(this).load(currentUser.getPhotoUrl()).into(userAvatar);
+            }
+
             Toast.makeText(this, "Welcome "+currentUser.getDisplayName(), Toast.LENGTH_SHORT).show();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, accFrag).hide(accFrag).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, reportFrag).hide(reportFrag).commit();
@@ -84,8 +91,6 @@ public class MainActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-
 
                     switch(item.getItemId()){
                         case R.id.nav_home:
