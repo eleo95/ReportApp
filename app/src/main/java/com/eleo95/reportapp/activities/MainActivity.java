@@ -1,32 +1,57 @@
 package com.eleo95.reportapp.activities;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.eleo95.reportapp.R;
+import com.eleo95.reportapp.Upload;
 import com.eleo95.reportapp.fragments.AccountFragment;
 import com.eleo95.reportapp.fragments.HomeFragment;
 import com.eleo95.reportapp.fragments.ReportsFragment;
+import com.eleo95.reportapp.interfaces.FragmentComunicator;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-public class MainActivity extends AppCompatActivity {
+import static com.eleo95.reportapp.myapplication.MyApplication.CHANNEL_1_ID;
+
+public class MainActivity extends AppCompatActivity implements FragmentComunicator{
     private FirebaseAuth mAuth;
     final Fragment homeFrag = new HomeFragment();
     final Fragment reportFrag = new ReportsFragment();
     final Fragment accFrag = new AccountFragment();
     private Fragment selectedFragment = homeFrag;
     private ImageView userAvatar;
+    public StorageReference mStorageRef;
+    public DatabaseReference mDatabaseRef;
+    public Task mUploadTask;
+
+
+    public NotificationManagerCompat mNotificationManager;
+    private NotificationCompat.Builder notification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         userAvatar = findViewById(R.id.photo);
+        mNotificationManager = NotificationManagerCompat.from(this);
 
 
         if(currentUser != null){
@@ -48,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, reportFrag).hide(reportFrag).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, homeFrag).commit();
             BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+            mStorageRef = FirebaseStorage.getInstance().getReference("reports");
+            mDatabaseRef = FirebaseDatabase.getInstance().getReference("reports/"+currentUser.getUid());
             bottomNav.setOnNavigationItemSelectedListener(navListener);
             userAvatar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -121,7 +149,89 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
 
+    }
 
+    public void uploadFile(Uri imgUrl, final String title, final String description, final String location){
+        if (imgUrl != null){
+            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+                    +"."+getFileExtension(imgUrl));
+
+            showNotifUpload();
+//            File file = new File(String.valueOf(imgUrl));
+//            boolean isDeleted = file.getAbsoluteFile().delete();
+//
+//            if (isDeleted){
+//                Toast.makeText(this, "deleted", Toast.LENGTH_SHORT).show();
+//            }
+
+
+            mUploadTask = fileReference.putFile(imgUrl).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+
+                    notification.setProgress(100,(int) progress,false);
+                    mNotificationManager.notify(0,notification.build());
+
+                }
+            }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return fileReference.getDownloadUrl();
+
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        //  Toast.makeText(MainActivity.this, "1111error", Toast.LENGTH_SHORT).show();
+                        notification.setContentText("Upload Complete");
+                        notification.setProgress(0,0,false);
+                        mNotificationManager.notify(0,notification.build());
+
+                        Toast.makeText(MainActivity.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+                        Uri downloadUri = task.getResult();
+                        Upload upload = new Upload(title,
+                                downloadUri.toString(),description,location,"");
+                        //Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
+                        String uploadId = mDatabaseRef.push().getKey();
+                        upload.setmKey(uploadId);
+                        mDatabaseRef.child(uploadId).setValue(upload);
+
+
+                    } else {
+                        Toast.makeText(MainActivity.this, "upload failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            });
+
+
+        } else{
+            Toast.makeText(MainActivity.this, "No file selected", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private String getFileExtension(Uri uri){
+        ContentResolver cR = MainActivity.this.getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+
+    }
+
+    public void showNotifUpload(){
+        notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_report_24dp)
+                .setContentTitle("Upload")
+                .setContentText("Upload in progress")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                .setProgress(100,0,false);
+        mNotificationManager.notify(0,notification.build());
     }
 
 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.eleo95.reportapp.BuildConfig;
 import com.eleo95.reportapp.R;
 
 import java.io.File;
@@ -68,7 +69,6 @@ public class ReportDetailsActivity extends AppCompatActivity {
 
 
     private void sharePost(){
-
         Bitmap bitmap =getBitmapFromView(postImage);
         try {
             File file = new File(this.getExternalCacheDir(),"tempImage.png");
@@ -78,11 +78,11 @@ public class ReportDetailsActivity extends AppCompatActivity {
             fOut.close();
             Uri imageUri = FileProvider.getUriForFile(
                     this,
-                    "com.eleo95.logmein.provider", //(use your app signature + ".provider" )
+                    BuildConfig.APPLICATION_ID+".provider", //(use your app signature + ".provider" )
                     file);
             final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(Intent.EXTRA_TEXT, getParams.getStringExtra("title"));
+            intent.putExtra(Intent.EXTRA_TEXT, postTitle.getText()+"\n"+postDescription.getText());
             intent.putExtra(Intent.EXTRA_STREAM, imageUri);
             intent.setType("image/png");
             startActivity(Intent.createChooser(intent, "Share image via"));
