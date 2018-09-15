@@ -10,12 +10,6 @@ public class User {
 
     }
 
-    public User(String name, String email, String password) {
-        Name = name;
-        Email = email;
-        Password = password;
-    }
-
     public String getName() {
         return Name;
     }

@@ -68,9 +68,9 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ImageVie
             public boolean onLongClick(View v) {
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-                dialog.setTitle("Delete report");
-                dialog.setMessage("R u sure u wanna delete this?");
-                dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                dialog.setTitle(R.string.delete_report);
+                dialog.setMessage(R.string.delete_report_ask);
+                dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();

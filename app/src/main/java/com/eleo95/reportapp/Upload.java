@@ -8,7 +8,7 @@ public class Upload {
     private String mKey;
 
     public Upload(){
-        //empty constructor needed
+        //constructor vacío necesario para adapter
     }
     public Upload(String title, String imageUrl, String description, String location,String key) {
         if(title.trim().equals("")){

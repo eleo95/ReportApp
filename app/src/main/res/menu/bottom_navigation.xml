@@ -3,14 +3,14 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_24dp"
-        android:title="Home"/>
+        android:title="@string/home_label"/>
     <item
         android:id="@+id/nav_report"
         android:icon="@drawable/ic_report_24dp"
-        android:title="Report"/>
+        android:title="@string/report_label"/>
     <item
         android:id="@+id/nav_account"
         android:icon="@drawable/ic_account_circle_24dp"
-        android:title="Account"/>
+        android:title="@string/account_label"/>
 
 </menu>

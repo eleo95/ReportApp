@@ -5,6 +5,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import com.eleo95.reportapp.R;
+
 public class MyApplication extends Application {
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
@@ -18,17 +20,17 @@ public class MyApplication extends Application {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_1_ID,
-                    "Channel 1",
+                    getString(R.string.channel_1),
                     NotificationManager.IMPORTANCE_LOW
             );
-            channel1.setDescription("This is the 1st and main channel for notifications");
+            channel1.setDescription(getString(R.string.channel_1_descrip));
 
             NotificationChannel channel2 = new NotificationChannel(
                     CHANNEL_2_ID,
-                    "Channel 2",
+                    getString(R.string.channel_2),
                     NotificationManager.IMPORTANCE_HIGH
             );
-            channel2.setDescription("This is the 2nd and alternative channel for notifications");
+            channel2.setDescription(getString(R.string.channel_2_descrip));
 
             NotificationManager manager = getSystemService(NotificationManager.class);
            if(manager!=null){

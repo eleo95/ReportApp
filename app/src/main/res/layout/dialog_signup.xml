@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -9,12 +8,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:fontFamily="@font/productsansregular"
         android:gravity="center"
+        android:text="@string/register"
         android:textSize="20sp"
-        android:fontFamily="@font/productsansregular"/>
+        android:textStyle="bold" />
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Username:"
+            android:text="@string/username"
             android:minLines="1"
             android:fontFamily="@font/productsansregular"
             android:textSize="15sp"
@@ -39,7 +39,6 @@
             android:layout_height="wrap_content"
             />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +48,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email:"
+            android:text="@string/email"
             android:fontFamily="@font/productsansregular"
             android:minLines="1"
             android:textSize="15sp"
@@ -74,7 +73,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password:"
+            android:text="@string/password"
             android:fontFamily="@font/productsansregular"
             android:minLines="1"
             android:textSize="15sp"
@@ -88,30 +87,63 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             />
+    </LinearLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/dialog_edittext_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/productsansregular"
+            android:hint="@string/username"
+            android:inputType="text"
+            android:maxLines="1" />
+
+        <EditText
+            android:id="@+id/dialog_edittext_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/productsansregular"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1" />
+
+        <EditText
+            android:id="@+id/dialog_edittext_psswrd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/productsansregular"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_margin="10dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/create_user_btn"
-            android:background="@drawable/button_style"
-            android:layout_width="150dp"
-            android:textColor="#fff"
-            android:fontFamily="@font/productsansregular"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
+            style="@style/blueButton"
+            android:layout_width="180dp"
+            android:padding="10dp"
             android:layout_height="wrap_content"
-            android:text="Create Account"
-            />
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:text="@string/create_account"/>
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>

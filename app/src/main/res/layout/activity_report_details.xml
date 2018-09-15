@@ -14,30 +14,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:contentDescription="@string/report_photo"
                 android:id="@+id/display_post_image"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:scaleType="centerCrop"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_launcher_background" />
 
         </RelativeLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <TextView
                 android:id="@+id/display_post_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/productsansregular"
-                android:text="My Awesome Title"
+                tools:text="My Awesome Title"
                 android:textSize="28sp"
                 android:layout_weight="1"/>
             <ImageView
+                android:contentDescription="@string/share_button"
                 android:id="@+id/share_icon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -49,31 +51,46 @@
 
         </LinearLayout>
 
+
+
         <TextView
             android:id="@+id/display_post_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:fontFamily="@font/productsansregular"
-            android:text="Description"
+            tools:text="Description"
             android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:fontFamily="@font/productsansregular"
-            android:text="Location"
-            android:textSize="20sp" />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:background="@color/colorAccent">
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="10dp"
+               android:fontFamily="@font/productsansregular"
+               android:text="@string/location"
+               android:textColor="#fff"
+               android:textSize="28sp" />
 
-        <ImageView
-            android:id="@+id/display_post_location_img"
-            android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background" />
+           <android.support.v7.widget.CardView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="10dp">
+               <ImageView
+                   android:contentDescription="@string/location_image"
+                   android:id="@+id/display_post_location_img"
+                   android:layout_width="match_parent"
+                   android:layout_margin="10dp"
+                   android:layout_height="300dp"
+                   android:layout_gravity="center"
+                   android:scaleType="fitXY"
+                   android:src="@drawable/ic_launcher_background" />
+           </android.support.v7.widget.CardView>
+       </LinearLayout>
 
     </LinearLayout>
 

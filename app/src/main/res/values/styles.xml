@@ -26,4 +26,11 @@
     <style name="navMenu">
         <item name="android:fontFamily">@font/productsansregular</item>
     </style>
+
+    <style name="blueButton">
+        <item name="android:fontFamily">@font/productsansregular</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/button_style</item>
+    </style>
 </resources>

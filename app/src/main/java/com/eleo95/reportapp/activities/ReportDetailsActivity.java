@@ -41,7 +41,7 @@ public class ReportDetailsActivity extends AppCompatActivity {
         shareIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ReportDetailsActivity.this, "Please wait...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReportDetailsActivity.this, R.string.please_wait, Toast.LENGTH_SHORT).show();
                 sharePost();
             }
         });
@@ -73,19 +73,19 @@ public class ReportDetailsActivity extends AppCompatActivity {
         try {
             File file = new File(this.getExternalCacheDir(),"tempImage.png");
             FileOutputStream fOut = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, fOut);
             fOut.flush();
             fOut.close();
             Uri imageUri = FileProvider.getUriForFile(
                     this,
-                    BuildConfig.APPLICATION_ID+".provider", //(use your app signature + ".provider" )
+                    BuildConfig.APPLICATION_ID+".provider",
                     file);
             final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Intent.EXTRA_TEXT, postTitle.getText()+"\n"+postDescription.getText());
             intent.putExtra(Intent.EXTRA_STREAM, imageUri);
             intent.setType("image/png");
-            startActivity(Intent.createChooser(intent, "Share image via"));
+            startActivity(Intent.createChooser(intent, getString(R.string.share_image_via)));
         } catch (Exception e) {
             e.printStackTrace();
         }

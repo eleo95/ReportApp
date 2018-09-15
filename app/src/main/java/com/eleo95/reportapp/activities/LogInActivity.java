@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eleo95.reportapp.R;
@@ -34,15 +35,12 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button loginButton;
-    private Button signUpButton;
-    private Button googleSignInButton;
-    private boolean isLogged = false;
+   // private boolean isLogged = false;
     private FirebaseAuth mAuth;
     private EditText TextMail;
     private EditText TextPass;
-    private Button createUserBtn;
     private EditText dName, dEmail, dPasswrd;
+    private ProgressBar loginProgress;
 
     private GoogleSignInClient mGoogleSignInClient;
     // Storage Permissions
@@ -60,11 +58,12 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
 
-        loginButton = findViewById(R.id.loginButton);
+        Button loginButton = findViewById(R.id.loginButton);
         TextMail = findViewById(R.id.login_mail);
         TextPass = findViewById(R.id.login_password);
-        googleSignInButton = findViewById(R.id.googleButton);
-        signUpButton = findViewById(R.id.signup_Button);
+        Button googleSignInButton = findViewById(R.id.googleButton);
+        Button signUpButton = findViewById(R.id.signup_Button);
+        loginProgress = findViewById(R.id.login_progress);
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -93,7 +92,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(LogInActivity.this,"Registrado",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogInActivity.this, R.string.registered,Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(userName)
@@ -106,11 +105,11 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                         }else {
                             //if collition detected
                             if(task.getException() instanceof FirebaseAuthUserCollisionException){
-                                Toast.makeText(LogInActivity.this, "Este usuario ya existe",
+                                Toast.makeText(LogInActivity.this, R.string.email_create_error,
                                         Toast.LENGTH_SHORT).show();
                             }else {
                                 // If sign in fails, display a message to the user.
-                                Toast.makeText(LogInActivity.this, "Error",
+                                Toast.makeText(LogInActivity.this, R.string.create_user_error,
                                         Toast.LENGTH_SHORT).show();
                             }
 
@@ -126,18 +125,19 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         String password = TextPass.getText().toString().trim();
 
 
-        if(!isReallyEmpty(TextMail) && !isReallyEmpty(TextPass)){
-            Toast.makeText(this,"Connecting...", Toast.LENGTH_SHORT).show();
+        if(editTextHasText(TextMail) && editTextHasText(TextPass)){
+
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
+                                loginProgress.setVisibility(View.GONE);
                                 goToHome();
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Toast.makeText(LogInActivity.this, "Authentication failed.",
+                                Toast.makeText(LogInActivity.this, R.string.auth_failed,
                                         Toast.LENGTH_SHORT).show();
 
                             }
@@ -154,7 +154,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         dialog.setContentView(R.layout.dialog_signup);
         dialog.show();
-        createUserBtn = dialog.findViewById(R.id.create_user_btn);
+        Button createUserBtn = dialog.findViewById(R.id.create_user_btn);
         dName = dialog.findViewById(R.id.dialog_edittext_name);
         dEmail = dialog.findViewById(R.id.dialog_edittext_email);
         dPasswrd = dialog.findViewById(R.id.dialog_edittext_psswrd);
@@ -162,15 +162,13 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
 
-
-
-                if(!isReallyEmpty(dName) && !isReallyEmpty(dEmail) && !isReallyEmpty(dPasswrd)){
+                if(editTextHasText(dName) && editTextHasText(dEmail) && editTextHasText(dPasswrd)){
                     User user = new User();
                     user.setEmail(dEmail.getText().toString().trim());
                     user.setPassword(dPasswrd.getText().toString().trim());
                     user.setName(dName.getText().toString().trim());
                     registarUsuario(user);
-                    Toast.makeText(LogInActivity.this, "done!!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LogInActivity.this, "done!!", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -188,9 +186,11 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.loginButton:
+                loginProgress.setVisibility(View.VISIBLE);
                 simpleLogin();
                 break;
             case R.id.googleButton:
+                loginProgress.setVisibility(View.VISIBLE);
                 googleSignIn();
                 break;
             case R.id.signup_Button:
@@ -219,11 +219,13 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        loginProgress.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             goToHome();
@@ -253,13 +255,15 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private boolean isReallyEmpty(EditText etext){
-        if(TextUtils.isEmpty(etext.getText())){
-            etext.setError("no puede estar vacio");
-            return true;
+    private boolean editTextHasText(EditText editText){
+        if(TextUtils.isEmpty(editText.getText())){
+            editText.setError(getString(R.string.edit_text_error));
+            return false;
         }
-        return false;
+        return true;
     }
+
+
 
     private void goToHome(){
         Intent intent = new Intent(LogInActivity.this,MainActivity.class);

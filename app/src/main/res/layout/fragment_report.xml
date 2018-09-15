@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,74 +9,80 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:background="@color/colorAccent"
-            android:layout_height="150dp">
+            android:layout_height="150dp"
+            android:background="@color/colorAccent">
+
             <ImageView
                 android:id="@+id/reportImage"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:contentDescription="@string/report_photo"
                 android:scaleType="centerCrop"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
             <ImageView
                 android:id="@+id/camImgBtn"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_gravity="end"
-                android:layout_marginTop="110dp"
                 android:layout_marginEnd="5dp"
+                android:layout_marginTop="110dp"
                 android:background="@drawable/ic_photo_camera_24dp"
-                />
+                android:contentDescription="@string/camera_button" />
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
 
-            android:layout_marginEnd="20dp">
+            android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_title_24dp"
                 android:tint="@color/colorAccent"
-                />
+                tools:ignore="ContentDescription" />
 
             <EditText
-                android:fontFamily="@font/productsansregular"
                 android:id="@+id/post_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/productsansregular"
                 android:hint="@string/title"
-                android:inputType="text"/>
+                android:inputType="text" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
             <ImageView
-                android:tint="@color/colorAccent"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_description_24dp"
-                />
+                android:tint="@color/colorAccent"
+                tools:ignore="ContentDescription" />
 
             <EditText
-                android:fontFamily="@font/productsansregular"
                 android:id="@+id/post_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/productsansregular"
                 android:hint="@string/description"
-                android:inputType="textMultiLine"/>
+                android:inputType="textMultiLine" />
 
         </LinearLayout>
 
@@ -84,11 +90,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="0dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
-
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
 
 
             <FrameLayout
@@ -96,65 +101,63 @@
                 style="?android:attr/buttonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_style"
+                android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp">
+                android:background="@drawable/button_style">
 
                 <Button
-                    android:fontFamily="@font/productsansregular"
                     style="@style/captionOnly"
-                    android:textColor="#fff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:drawableStart="@drawable/ic_location_on_24dp"
+                    android:fontFamily="@font/productsansregular"
                     android:text="@string/location_select"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
 
                     />
 
             </FrameLayout>
+
             <ImageView
                 android:id="@+id/mapView"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
                 android:layout_gravity="center"
+                android:contentDescription="@string/location_image"
                 android:scaleType="fitXY"
-                />
+                android:visibility="gone" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:gravity="center">
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <Button
-                android:fontFamily="@font/productsansregular"
-                android:background="@drawable/button_style"
+                style="@style/blueButton"
                 android:id="@+id/submit_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="@string/submit"
                 android:layout_weight="1"
-                android:textColor="#fff"
-                style="?android:attr/borderlessButtonStyle"/>
+                android:text="@string/submit"/>
+
             <Button
-                android:fontFamily="@font/productsansregular"
-                android:layout_weight="1"
                 android:id="@+id/clear_button"
-                android:background="@drawable/button_style"
+                style="@style/blueButton"
                 android:layout_width="wrap_content"
-                android:textColor="#fff"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="@string/clear"
-                style="?android:attr/borderlessButtonStyle"/>
+                android:layout_weight="1"
+                android:text="@string/clear"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

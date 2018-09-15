@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.bumptech.glide.Glide;
 import com.eleo95.reportapp.activities.LogInActivity;
@@ -47,7 +47,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                Toast.makeText(getContext(),"Signed Out",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(),"Signed Out",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), LogInActivity.class);
                 startActivity(intent);
                 if(getActivity()!=null){
