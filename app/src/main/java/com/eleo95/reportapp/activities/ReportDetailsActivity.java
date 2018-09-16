@@ -47,7 +47,7 @@ public class ReportDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void infoDumper(){
+    private void infoDumper() {
         postTitle.setText(getParams.getStringExtra("title"));
         postDescription.setText(getParams.getStringExtra("description"));
         Glide.with(this).load(getParams.getStringExtra("imgUrl"))
@@ -59,30 +59,29 @@ public class ReportDetailsActivity extends AppCompatActivity {
 
     }
 
-    private String getMapUrl(String coordinates){
+    private String getMapUrl(String coordinates) {
         return "https://maps.googleapis.com/maps/api/staticmap?center="
-                +coordinates+"&scale=2&markers=|color:0x0589E1|"
-                +coordinates+"&zoom=17&size=300x300&maptype=roadmap";
+                + coordinates + "&scale=2&markers=|color:0x0589E1|"
+                + coordinates + "&zoom=17&size=300x300&maptype=roadmap";
 
     }
 
 
-
-    private void sharePost(){
-        Bitmap bitmap =getBitmapFromView(postImage);
+    private void sharePost() {
+        Bitmap bitmap = getBitmapFromImageView(postImage);
         try {
-            File file = new File(this.getExternalCacheDir(),"tempImage.png");
+            File file = new File(this.getExternalCacheDir(), "tempImage.png");
             FileOutputStream fOut = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 50, fOut);
             fOut.flush();
             fOut.close();
             Uri imageUri = FileProvider.getUriForFile(
                     this,
-                    BuildConfig.APPLICATION_ID+".provider",
+                    BuildConfig.APPLICATION_ID + ".provider",
                     file);
             final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(Intent.EXTRA_TEXT, postTitle.getText()+"\n"+postDescription.getText());
+            intent.putExtra(Intent.EXTRA_TEXT, postTitle.getText() + "\n" + postDescription.getText());
             intent.putExtra(Intent.EXTRA_STREAM, imageUri);
             intent.setType("image/png");
             startActivity(Intent.createChooser(intent, getString(R.string.share_image_via)));
@@ -92,16 +91,16 @@ public class ReportDetailsActivity extends AppCompatActivity {
 
     }
 
-    private Bitmap getBitmapFromView(View view) {
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(returnedBitmap);
-        Drawable bgDrawable =view.getBackground();
-        if (bgDrawable!=null) {
-            bgDrawable.draw(canvas);
-        }   else{
-            canvas.drawColor(Color.WHITE);
+    private Bitmap getBitmapFromImageView(View view) {
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas cnvs = new Canvas(returnedBitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null) {
+            bgDrawable.draw(cnvs);
+        } else {
+            cnvs.drawColor(Color.WHITE);
         }
-        view.draw(canvas);
+        view.draw(cnvs);
         return returnedBitmap;
     }
 }

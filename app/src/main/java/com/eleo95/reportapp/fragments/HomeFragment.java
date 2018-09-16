@@ -38,10 +38,11 @@ public class HomeFragment extends Fragment {
     private List<Upload> mUploadsHori;
     private ProgressBar mProgressCircler, mProgressCircleHori;
     private FirebaseAuth mAuth;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home,container,false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
@@ -62,18 +63,18 @@ public class HomeFragment extends Fragment {
         mDatabaseRefCurrUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getChildrenCount()==0){
+                if (dataSnapshot.getChildrenCount() == 0) {
                     myPostsLayout.setVisibility(View.GONE);
-                }else{
+                } else {
                     //Toast.makeText(getContext(), dataSnapshot.getChildren(), Toast.LENGTH_SHORT).show();
                     myPostsLayout.setVisibility(View.VISIBLE);
                     mUploadsHori = new ArrayList<>();
-                    for(DataSnapshot postSnapShot : dataSnapshot.getChildren()){
+                    for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
                         Upload upload = postSnapShot.getValue(Upload.class);
                         mUploadsHori.add(upload);
                     }
-                    myPostadapter = new MyPostsAdapter(getContext(),mUploadsHori);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,true);
+                    myPostadapter = new MyPostsAdapter(getContext(), mUploadsHori);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true);
                     linearLayoutManager.setStackFromEnd(true);
                     mRecyclerViewHori.setLayoutManager(linearLayoutManager);
                     mRecyclerViewHori.setAdapter(myPostadapter);
@@ -91,16 +92,16 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUploads = new ArrayList<>();
-                for(DataSnapshot postSnapShot : dataSnapshot.getChildren()){
-                    for(DataSnapshot postSnapShot2 : postSnapShot.getChildren()){
+                for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot postSnapShot2 : postSnapShot.getChildren()) {
 
-                        if(postSnapShot.getKey()!=null){
+                        if (postSnapShot.getKey() != null) {
 
-                            if(!postSnapShot.getKey().equals(mAuth.getUid())) {
+                            if (!postSnapShot.getKey().equals(mAuth.getUid())) {
                                 Upload upload = postSnapShot2.getValue(Upload.class);
                                 mUploads.add(upload);
                             }
-                        }else{
+                        } else {
                             Toast.makeText(getContext(), "Error veifique su conección y reinicia el app", Toast.LENGTH_SHORT).show();
                         }
 
@@ -111,13 +112,13 @@ public class HomeFragment extends Fragment {
                     @Override
                     public int compare(Upload o1, Upload o2) {
                         String val1 = o1.getmImageUrl().split("%")[1];
-                        String val2 =  o2.getmImageUrl().split("%")[1];
-                        return (int)(Long.valueOf(val1.substring(2, val1.indexOf(".")))
-                                - Long.valueOf(val2.substring(2, val1.indexOf(".")))) ;
+                        String val2 = o2.getmImageUrl().split("%")[1];
+                        return (int) (Long.valueOf(val1.substring(2, val1.indexOf(".")))
+                                - Long.valueOf(val2.substring(2, val1.indexOf("."))));
                     }
                 });
 
-                mImageAdapter = new NewPostsAdapter(getContext(),mUploads);
+                mImageAdapter = new NewPostsAdapter(getContext(), mUploads);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                         getContext(),
                         LinearLayoutManager.VERTICAL,

@@ -29,14 +29,15 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ImageVie
     private List<Upload> mUploads;
 
 
-    public MyPostsAdapter(Context context, List<Upload> uploads){
+    public MyPostsAdapter(Context context, List<Upload> uploads) {
         mContext = context;
         mUploads = uploads;
     }
+
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.post_structure_square,parent,false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.post_structure_square, parent, false);
 
         return new ImageViewHolder(v);
     }
@@ -67,22 +68,23 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ImageVie
             @Override
             public boolean onLongClick(View v) {
 
-                AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mContext, R.style.dialogTheme);
                 dialog.setTitle(R.string.delete_report);
                 dialog.setMessage(R.string.delete_report_ask);
                 dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                        if(mAuth.getCurrentUser()!=null){
-                            FirebaseDatabase.getInstance().getReference("reports/"+ mAuth.getCurrentUser().getUid())
+                        if (mAuth.getCurrentUser() != null) {
+                            FirebaseDatabase.getInstance().getReference("reports/" + mAuth.getCurrentUser().getUid())
                                     .child(uploadCurrent.getmKey()).removeValue();
+                            FirebaseStorage.getInstance().getReferenceFromUrl(uploadCurrent.getmImageUrl()).delete();
                         }
-                        FirebaseStorage.getInstance().getReferenceFromUrl(uploadCurrent.getmImageUrl()).delete();
+
 
                     }
                 });
-                dialog.setNegativeButton("No",null);
+                dialog.setNegativeButton("No", null);
                 dialog.create();
                 dialog.show();
 
@@ -98,24 +100,25 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ImageVie
         return mUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder{
+    public class ImageViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
+
         private ImageViewHolder(View itemView) {
             super(itemView);
 
-           imageView = itemView.findViewById(R.id.image_view_upload);
+            imageView = itemView.findViewById(R.id.image_view_upload);
 
         }
     }
 
-    private void showResults(Upload currentPost){
-        Intent intent = new Intent(mContext,ReportDetailsActivity.class);
-        intent.putExtra("title",currentPost.getmTitle());
-        intent.putExtra("imgUrl",currentPost.getmImageUrl());
+    private void showResults(Upload currentPost) {
+        Intent intent = new Intent(mContext, ReportDetailsActivity.class);
+        intent.putExtra("title", currentPost.getmTitle());
+        intent.putExtra("imgUrl", currentPost.getmImageUrl());
         intent.putExtra("description", currentPost.getmDescription());
-        intent.putExtra("location",currentPost.getmLocation());
+        intent.putExtra("location", currentPost.getmLocation());
         mContext.startActivity(intent);
 
-   }
+    }
 
 }

@@ -73,8 +73,8 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        style="@style/blueButton"
         android:id="@+id/googleButton"
+        style="@style/blueButton"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
@@ -100,11 +100,11 @@
         tools:ignore="ContentDescription" />
 
     <ProgressBar
-        android:visibility="gone"
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

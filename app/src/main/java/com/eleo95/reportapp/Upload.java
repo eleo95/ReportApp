@@ -7,17 +7,18 @@ public class Upload {
     private String mLocation;
     private String mKey;
 
-    public Upload(){
+    public Upload() {
         //constructor vacío necesario para adapter
     }
-    public Upload(String title, String imageUrl, String description, String location,String key) {
-        if(title.trim().equals("")){
+
+    public Upload(String title, String imageUrl, String description, String location, String key) {
+        if (title.trim().equals("")) {
             title = "No Title";
         }
-        if(description.trim().equals("")){
+        if (description.trim().equals("")) {
             description = "No descrpt";
         }
-        if(location.trim().equals("")){
+        if (location.trim().equals("")) {
             location = "No location";
         }
         this.mTitle = title;
@@ -43,11 +44,11 @@ public class Upload {
         this.mImageUrl = mImageUrl;
     }
 
-    public String getmDescription(){
+    public String getmDescription() {
         return mDescription;
     }
 
-    public String getmLocation(){
+    public String getmLocation() {
         return mLocation;
     }
 

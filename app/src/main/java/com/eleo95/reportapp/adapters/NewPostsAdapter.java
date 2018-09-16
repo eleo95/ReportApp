@@ -25,14 +25,15 @@ public class NewPostsAdapter extends RecyclerView.Adapter<NewPostsAdapter.ImageV
     private Context mContext;
     private List<Upload> mUploads;
 
-    public NewPostsAdapter(Context context, List<Upload> uploads){
+    public NewPostsAdapter(Context context, List<Upload> uploads) {
         mContext = context;
         mUploads = uploads;
     }
+
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.post_structure,parent,false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.post_structure, parent, false);
         return new ImageViewHolder(v);
     }
 
@@ -58,7 +59,7 @@ public class NewPostsAdapter extends RecyclerView.Adapter<NewPostsAdapter.ImageV
                 String description = mUploads.get(pos).getmDescription();
                 String imgUrl = mUploads.get(pos).getmImageUrl();
                 String location = mUploads.get(pos).getmLocation();
-                showResults(title, imgUrl,description,location);
+                showResults(title, imgUrl, description, location);
 
             }
         });
@@ -71,9 +72,10 @@ public class NewPostsAdapter extends RecyclerView.Adapter<NewPostsAdapter.ImageV
         return mUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder{
+    public class ImageViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle, textViewDescription;
         public ImageView imageView;
+
         private ImageViewHolder(View itemView) {
             super(itemView);
 
@@ -84,13 +86,13 @@ public class NewPostsAdapter extends RecyclerView.Adapter<NewPostsAdapter.ImageV
         }
     }
 
-    private void showResults(String title, String imgUrl, String description, String location){
-        Intent intent = new Intent(mContext,ReportDetailsActivity.class);
-        intent.putExtra("title",title);
-        intent.putExtra("imgUrl",imgUrl);
+    private void showResults(String title, String imgUrl, String description, String location) {
+        Intent intent = new Intent(mContext, ReportDetailsActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("imgUrl", imgUrl);
         intent.putExtra("description", description);
-        intent.putExtra("location",location);
+        intent.putExtra("location", location);
         mContext.startActivity(intent);
 
-   }
+    }
 }

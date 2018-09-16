@@ -1,58 +1,68 @@
 <resources>
     <string name="app_name">ReportApp</string>
+
     <string name="home_label">Home</string>
     <string name="report_label">Report</string>
     <string name="account_label">Account</string>
     <string name="about">About</string>
     <string name="exit">Exit</string>
+
     <string name="my_reports">My Reports</string>
     <string name="new_reports">New Reports</string>
-    <string name="title">Title</string>
-    <string name="description">Description</string>
-    <string name="location_select">Select Location</string>
-    <string name="submit">Submit</string>
-    <string name="clear">Clear</string>
-    <string name="username">Username</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="created_posts">Created Posts:</string>
-    <string name="email_addr">E-mail Address:</string>
-    <string name="logout">Log Out</string>
-    <string name="location">Location</string>
-    <string name="share_button">Share Button</string>
-    <string name="location_image">Location Image</string>
-    <string name="report_photo">Report photo</string>
-    <string name="camera_button">Camera Button</string>
-    <string name="user_photo">User Photo</string>
-    <string name="register">Register</string>
-    <string name="create_account">Create Account</string>
-    <string name="login">Login</string>
-    <string name="report_field_check">Fill all fields</string>
-    <string name="edit_text_error">This field cannot be empty</string>
-    <string name="photo_from_gallery">Select photo from gallery</string>
-    <string name="photo_from_camera">Capture photo from camera</string>
-    <string name="select_action">Select Action</string>
-    <string name="please_wait">Please wait</string>
-    <string name="share_image_via">Share post via</string>
-    <string name="sharing">Sharing…</string>
-    <string name="email_create_error">This email is already registered</string>
-    <string name="create_user_error">Error, try again</string>
-    <string name="registered">Registered</string>
-    <string name="auth_failed">Authentication failed</string>
-    <string name="channel_1">Channel 1</string>
-    <string name="channel_2">Channel 2</string>
-    <string name="channel_1_descrip">This is the 1st and main channel for notifications</string>
-    <string name="channel_2_descrip">This is the 2nd and alternative channel for notifications</string>
     <string name="delete_report">Delete report</string>
     <string name="delete_report_ask">Want to delete this?</string>
     <string name="yes">yes</string>
     <string name="report_upload_complete">Report upload complete!</string>
     <string name="report_upload_progress">Report upload in progress</string>
     <string name="Report_upload">Report upload</string>
+    <string name="close">Close</string>
+    <string name="welcome">Welcome</string>
+
+    <string name="camera_button">Camera Button</string>
+    <string name="photo_from_gallery">Select photo from gallery</string>
+    <string name="photo_from_camera">Capture photo from camera</string>
+    <string name="select_action">Select Action</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="location_select">Select Location</string>
+    <string name="submit">Submit</string>
+    <string name="clear">Clear</string>
+
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="user_photo">User Photo</string>
+    <string name="create_account">Create Account</string>
+    <string name="login">Login</string>
+    <string name="registered">Registered</string>
+    <string name="report_field_check">Fill all fields</string>
+    <string name="edit_text_error">This field cannot be empty</string>
+    <string name="email_create_error">This email is already registered</string>
+    <string name="create_user_error">Error, try again</string>
+    <string name="auth_failed">Authentication failed</string>
+
+    <string name="created_posts">Created Posts:</string>
+    <string name="email_addr">E-mail Address:</string>
+    <string name="logout">Log Out</string>
+
+    <string name="location">Location</string>
+    <string name="share_button">Share Button</string>
+    <string name="location_image">Location Image</string>
+    <string name="report_photo">Report photo</string>
+    <string name="please_wait">Please wait</string>
+    <string name="share_image_via">Share report via</string>
+    <string name="sharing">Sharing…</string>
+
+    <string name="channel_1">Channel 1</string>
+    <string name="channel_2">Channel 2</string>
+    <string name="channel_1_descrip">This is the 1st and main channel for notifications</string>
+    <string name="channel_2_descrip">This is the 2nd and alternative channel for notifications</string>
+
     <string name="aboutTxt">
         ReportApp is an application designed for report all kinds of events and share them between platforms in an easy way.
         ReportApp has been developed by Eddy Leonardo T.
     </string>
-    <string name="welcome">Welcome</string>
+
 
 </resources>

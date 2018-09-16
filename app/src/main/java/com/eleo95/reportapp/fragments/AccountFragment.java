@@ -31,7 +31,7 @@ public class AccountFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_account,container,false);
+        return inflater.inflate(R.layout.fragment_account, container, false);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class AccountFragment extends Fragment {
                 //Toast.makeText(getContext(),"Signed Out",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), LogInActivity.class);
                 startActivity(intent);
-                if(getActivity()!=null){
+                if (getActivity() != null) {
                     getActivity().finish();
                 }
 
@@ -69,10 +69,10 @@ public class AccountFragment extends Fragment {
 
             }
         });
-        if(mAuth.getCurrentUser()!=null) {
+        if (mAuth.getCurrentUser() != null) {
             userName.setText(mAuth.getCurrentUser().getDisplayName());
         }
-        if(mAuth.getCurrentUser().getPhotoUrl()!=null) {
+        if (mAuth.getCurrentUser().getPhotoUrl() != null) {
             Glide.with(this).load(mAuth.getCurrentUser().getPhotoUrl()).into(iconLogo);
         }
         userEmail.setText(mAuth.getCurrentUser().getEmail());

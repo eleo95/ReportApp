@@ -23,8 +23,6 @@
         android:id="@+id/user_circleimageview"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_fallback_user"
@@ -119,13 +117,13 @@
     </android.support.v7.widget.CardView>
 
     <Button
-        android:fontFamily="@font/productsansregular"
         android:id="@+id/logout_btn"
         android:layout_width="wrap_content"
         android:layout_height="47dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_style"
         android:backgroundTint="#777"
+        android:fontFamily="@font/productsansregular"
         android:text="@string/logout"
         android:textColor="#fff"
         android:textStyle="bold"

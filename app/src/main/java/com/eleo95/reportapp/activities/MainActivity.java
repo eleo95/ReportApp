@@ -1,17 +1,15 @@
 package com.eleo95.reportapp.activities;
 
-import android.app.Dialog;
+
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +18,6 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -29,7 +26,7 @@ import com.eleo95.reportapp.Upload;
 import com.eleo95.reportapp.fragments.AccountFragment;
 import com.eleo95.reportapp.fragments.HomeFragment;
 import com.eleo95.reportapp.fragments.ReportsFragment;
-import com.eleo95.reportapp.interfaces.FragmentComunicator;
+import com.eleo95.reportapp.interfaces.FragmentCommunicator;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -46,7 +43,7 @@ import java.util.Objects;
 
 import static com.eleo95.reportapp.myapplication.MyApplication.CHANNEL_1_ID;
 
-public class MainActivity extends AppCompatActivity implements FragmentComunicator {
+public class MainActivity extends AppCompatActivity implements FragmentCommunicator {
     private FirebaseAuth mAuth;
     final Fragment homeFrag = new HomeFragment();
     final Fragment reportFrag = new ReportsFragment();
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
     private ImageView userAvatar;
     public StorageReference mStorageRef;
     public DatabaseReference mDatabaseRef;
-    public Task mUploadTask;
+    public Task ReportUploadTask;
 
 
     public NotificationManagerCompat mNotificationManager;
@@ -77,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                 Glide.with(this).load(currentUser.getPhotoUrl()).into(userAvatar);
             }
 
-            Toast.makeText(this, getString(R.string.welcome) + currentUser.getDisplayName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.welcome) + " " + currentUser.getDisplayName(), Toast.LENGTH_SHORT).show();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, accFrag).hide(accFrag).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, reportFrag).hide(reportFrag).commit();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, homeFrag).commit();
@@ -153,28 +150,15 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                 }
             };
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-
-    }
 
     public void uploadFile(Uri imgUrl, final String title, final String description, final String location) {
         if (imgUrl != null) {
-            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
-                    + "." + getFileExtension(imgUrl));
+            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis() + "." + getFileExtension(imgUrl));
 
             showNotifUpload();
-//            File file = new File(String.valueOf(imgUrl));
-//            boolean isDeleted = file.getAbsoluteFile().delete();
-//
-//            if (isDeleted){
-//                Toast.makeText(this, "deleted", Toast.LENGTH_SHORT).show();
-//            }
 
 
-            mUploadTask = fileReference.putFile(imgUrl).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            ReportUploadTask = fileReference.putFile(imgUrl).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
@@ -204,16 +188,15 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
 
                         //Toast.makeText(MainActivity.this, "Upload Successful", Toast.LENGTH_SHORT).show();
                         Uri downloadUri = task.getResult();
-                        Upload upload = new Upload(title,
+                        Upload newReport = new Upload(title,
                                 downloadUri.toString(), description, location, "");
-                        //Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
-                        String uploadId = mDatabaseRef.push().getKey();
-                        upload.setmKey(uploadId);
 
-                        if (uploadId != null) {
-                            mDatabaseRef.child(uploadId).setValue(upload);
+                        String newReportId = mDatabaseRef.push().getKey();
+                        newReport.setmKey(newReportId);
+
+                        if (newReportId != null) {
+                            mDatabaseRef.child(newReportId).setValue(newReport);
                         }
-
 
 
                     } else {
@@ -231,9 +214,9 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
     }
 
     private String getFileExtension(Uri uri) {
-        ContentResolver cR = MainActivity.this.getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
+        ContentResolver contentRes = MainActivity.this.getContentResolver();
+        MimeTypeMap mTypeMap = MimeTypeMap.getSingleton();
+        return mTypeMap.getExtensionFromMimeType(contentRes.getType(uri));
 
     }
 
@@ -248,27 +231,18 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         mNotificationManager.notify(0, notification.build());
     }
 
-    public void aboutDialog(){
-        final AlertDialog.Builder aDialog = new AlertDialog.Builder(this);
+    public void aboutDialog() {
+        final AlertDialog.Builder aDialog = new AlertDialog.Builder(this, R.style.dialogTheme);
         aDialog.setTitle(R.string.about);
         aDialog.setMessage(R.string.aboutTxt);
-        aDialog.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+        aDialog.setNeutralButton(R.string.close, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-
-        Dialog diag = aDialog.show();
-        TextView DialogMssg = diag.findViewById(android.R.id.message);
-        TextView DialogTitle = diag.findViewById(android.R.id.title);
-        Typeface typeface = ResourcesCompat.getFont(this,R.font.productsansregular);
-        if (DialogTitle != null && DialogMssg != null) {
-            DialogTitle.setTypeface(typeface);
-            DialogMssg.setTypeface(typeface);
-            DialogMssg.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        }
         aDialog.create();
+        aDialog.show();
 
     }
 }

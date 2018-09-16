@@ -31,7 +31,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.eleo95.reportapp.BuildConfig;
 import com.eleo95.reportapp.R;
-import com.eleo95.reportapp.interfaces.FragmentComunicator;
+import com.eleo95.reportapp.interfaces.FragmentCommunicator;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
@@ -54,7 +54,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     private EditText postTitle, postDescription;
     public static final String IMAGE_DIRECTORY_NAME = "ReportApp";
     private static final int REQUEST_CAMERA = 1, REQUEST_GALLERY = 2, PLACE_PICKER_REQUEST = 3, REQUEST_LOCATION_PERMISSION = 4;
-    private FragmentComunicator mFragmentComunicator;
+    private FragmentCommunicator mFragmentCommunicator;
     private String postLocation;
     private static String[] PERMISSIONS_LOCATION = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -96,7 +96,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.submit_button:
                 if (!postTitle.getText().toString().equals("") && !postDescription.getText().toString().equals("") && postLocation != null && mImageUri != null) {
-                    mFragmentComunicator.uploadFile(mImageUri,
+                    mFragmentCommunicator.uploadFile(mImageUri,
                             postTitle.getText().toString().trim(),
                             postDescription.getText().toString().trim(),
                             postLocation);
@@ -115,11 +115,11 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mFragmentComunicator = (FragmentComunicator) getActivity();
+        mFragmentCommunicator = (FragmentCommunicator) getActivity();
     }
 
     public void imagePicker() {
-        AlertDialog.Builder pickerDialog = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder pickerDialog = new AlertDialog.Builder(getContext(), R.style.dialogTheme);
         pickerDialog.setTitle(R.string.select_action);
         String[] dialogItems = {
                 getString(R.string.photo_from_gallery),

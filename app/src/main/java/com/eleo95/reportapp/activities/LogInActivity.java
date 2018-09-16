@@ -34,8 +34,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 
-public class LogInActivity extends AppCompatActivity implements View.OnClickListener{
-   // private boolean isLogged = false;
+public class LogInActivity extends AppCompatActivity implements View.OnClickListener {
+    // private boolean isLogged = false;
     private FirebaseAuth mAuth;
     private EditText TextMail;
     private EditText TextPass;
@@ -70,7 +70,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         verifyStoragePermissions(this);
         loginButton.setOnClickListener(this);
@@ -79,35 +79,36 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void registarUsuario(User user){
+    private void registarUsuario(User user) {
         final String userName = user.getName();
         String email = user.getEmail();
         String password = user.getPassword();
 
-        Toast.makeText(this,"Connecting...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Connecting...", Toast.LENGTH_SHORT).show();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(LogInActivity.this, R.string.registered,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogInActivity.this, R.string.registered, Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
+                            //add username to user
                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(userName)
                                     //.setPhotoUri(Uri.parse("https://firebasestorage.googleapis.com/v0/b/logmein-5db02.appspot.com/o/logo-user-png-6.png?alt=media&token=f86209b8-82e0-482c-b0a1-71771eb64acd"))
                                     .build();
-                            if (user!=null){
+                            if (user != null) {
                                 user.updateProfile(profileUpdates);
                             }
 
-                        }else {
+                        } else {
                             //if collition detected
-                            if(task.getException() instanceof FirebaseAuthUserCollisionException){
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                                 Toast.makeText(LogInActivity.this, R.string.email_create_error,
                                         Toast.LENGTH_SHORT).show();
-                            }else {
+                            } else {
                                 // If sign in fails, display a message to the user.
                                 Toast.makeText(LogInActivity.this, R.string.create_user_error,
                                         Toast.LENGTH_SHORT).show();
@@ -120,12 +121,12 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void simpleLogin(){
+    private void simpleLogin() {
         String email = TextMail.getText().toString().trim();
         String password = TextPass.getText().toString().trim();
 
 
-        if(editTextHasText(TextMail) && editTextHasText(TextPass)){
+        if (editTextHasText(TextMail) && editTextHasText(TextPass)) {
 
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -149,7 +150,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void createUser(){
+    private void createUser() {
         Dialog dialog = new Dialog(this);
 
         dialog.setContentView(R.layout.dialog_signup);
@@ -162,7 +163,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
 
-                if(editTextHasText(dName) && editTextHasText(dEmail) && editTextHasText(dPasswrd)){
+                if (editTextHasText(dName) && editTextHasText(dEmail) && editTextHasText(dPasswrd)) {
                     User user = new User();
                     user.setEmail(dEmail.getText().toString().trim());
                     user.setPassword(dPasswrd.getText().toString().trim());
@@ -184,7 +185,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.loginButton:
                 loginProgress.setVisibility(View.VISIBLE);
                 simpleLogin();
@@ -231,7 +232,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                             goToHome();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -255,8 +256,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private boolean editTextHasText(EditText editText){
-        if(TextUtils.isEmpty(editText.getText())){
+    private boolean editTextHasText(EditText editText) {
+        if (TextUtils.isEmpty(editText.getText())) {
+            loginProgress.setVisibility(View.GONE);
             editText.setError(getString(R.string.edit_text_error));
             return false;
         }
@@ -264,9 +266,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
-    private void goToHome(){
-        Intent intent = new Intent(LogInActivity.this,MainActivity.class);
+    private void goToHome() {
+        Intent intent = new Intent(LogInActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

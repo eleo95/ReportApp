@@ -142,13 +142,13 @@
             android:orientation="horizontal">
 
             <Button
-                style="@style/blueButton"
                 android:id="@+id/submit_button"
+                style="@style/blueButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:text="@string/submit"/>
+                android:text="@string/submit" />
 
             <Button
                 android:id="@+id/clear_button"
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:text="@string/clear"/>
+                android:text="@string/clear" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
