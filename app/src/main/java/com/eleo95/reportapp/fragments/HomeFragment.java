@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.eleo95.reportapp.R;
-import com.eleo95.reportapp.Upload;
+import com.eleo95.reportapp.model.Upload;
 import com.eleo95.reportapp.adapters.MyPostsAdapter;
 import com.eleo95.reportapp.adapters.NewPostsAdapter;
 import com.google.firebase.auth.FirebaseAuth;

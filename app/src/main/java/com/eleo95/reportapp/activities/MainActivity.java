@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.eleo95.reportapp.R;
-import com.eleo95.reportapp.Upload;
+import com.eleo95.reportapp.model.Upload;
 import com.eleo95.reportapp.fragments.AccountFragment;
 import com.eleo95.reportapp.fragments.HomeFragment;
 import com.eleo95.reportapp.fragments.ReportsFragment;
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
 
     public void uploadFile(Uri imgUrl, final String title, final String description, final String location) {
         if (imgUrl != null) {
-            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis() + "." + getFileExtension(imgUrl));
+            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis() + "." + fileTypeResolver(imgUrl));
 
             showNotifUpload();
 
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
 
     }
 
-    private String getFileExtension(Uri uri) {
+    private String fileTypeResolver(Uri uri) {
         ContentResolver contentRes = MainActivity.this.getContentResolver();
         MimeTypeMap mTypeMap = MimeTypeMap.getSingleton();
         return mTypeMap.getExtensionFromMimeType(contentRes.getType(uri));

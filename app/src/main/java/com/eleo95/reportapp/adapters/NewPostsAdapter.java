@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.eleo95.reportapp.R;
-import com.eleo95.reportapp.Upload;
+import com.eleo95.reportapp.model.Upload;
 import com.eleo95.reportapp.activities.ReportDetailsActivity;
 
 
