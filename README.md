@@ -1,6 +1,6 @@
 ﻿# ReportApp
 
-Aplicacion android para reporte de eventos.
+Aplicacion android para reporte de eventos sociales.
 
 * Soporte garantizado desde Android 5 Lollipop hasta 8.1 Oreo.
 * Respaldo de los reportes en la nube.
